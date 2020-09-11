@@ -14,6 +14,7 @@ export default createGlobalStyle`
 
   body{
     background: #312e38;
+    min-height:100vh;
     color: #FFF;
     text-rendering: optimizeLegibility ;
     -webkit-font-smoothing: antialiased;
@@ -29,6 +30,12 @@ export default createGlobalStyle`
   }
   h1,h2,h3,h4,h5,h6,strong{
     font-weight: 500;
+  }
+
+
+  #root{
+    /* max-width:1440px;
+    margin: 0 auto; */
   }
 
 `;
