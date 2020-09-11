@@ -3,6 +3,7 @@ import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
 
 import * as S from './styles';
 import logoImage from '../../assets/logo.svg';
+import Button from '../../components/Button';
 
 const Signin: React.FC = () => {
   return (
@@ -24,7 +25,7 @@ const Signin: React.FC = () => {
               <input type="password" placeholder="Senha" />
             </S.InputGroup>
 
-            <button type="submit">Entrar</button>
+            <Button type="submit">Entrar</Button>
 
             <a href="#/">Esqueci a senha</a>
           </S.Form>
