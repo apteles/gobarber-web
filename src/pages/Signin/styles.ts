@@ -63,30 +63,6 @@ export const Form = styled.form`
   }
 `;
 
-export const InputGroup = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  height: 5.8rem;
-  margin-bottom: 0.8rem;
-  border-radius: 1rem;
-  background: #232129;
-
-  padding: 2rem 0 2rem 1.8rem;
-
-  > input {
-    width: 100%;
-    border: none;
-    background: transparent;
-    color: #666360;
-  }
-  > svg {
-    color: #666360;
-    margin-right: 1.3em;
-  }
-`;
-
 export const Register = styled.span`
   display: flex;
   justify-content: center;
