@@ -22,5 +22,5 @@ export const Disabled: Story<ButtonProps> = args => <Button {...args} />;
 
 Disabled.args = {
   children: 'Confirmar mudanças',
-  disable: true,
+  disabled: true,
 };

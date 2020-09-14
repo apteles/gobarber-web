@@ -1,24 +1,11 @@
-import React from 'react';
+import React, { ButtonHTMLAttributes } from 'react';
 
 import * as S from './styles';
 
-export type ButtonProps = {
-  children?: React.ReactNode;
-  disable?: boolean;
-  onClick?: () => (event: React.MouseEvent<HTMLButtonElement>) => void;
-  type: 'button' | 'submit';
-};
+export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
 
-const Button: React.FC<ButtonProps> = ({
-  children,
-  disable = false,
-  ...props
-}: ButtonProps) => {
-  return (
-    <S.Container disabled={disable} {...props}>
-      {children}
-    </S.Container>
-  );
+const Button: React.FC<ButtonProps> = ({ children, ...props }: ButtonProps) => {
+  return <S.Container {...props}>{children}</S.Container>;
 };
 
 export default Button;
