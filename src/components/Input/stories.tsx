@@ -1,13 +1,8 @@
-import React, { InputHTMLAttributes } from 'react';
+import React from 'react';
 import { Story, Meta } from '@storybook/react/types-6-0';
 import { FiMail } from 'react-icons/fi';
 
-import Input from '.';
-
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  icon: JSX.Element;
-  name: string;
-}
+import Input, { InputProps } from '.';
 
 export default {
   title: 'Input',

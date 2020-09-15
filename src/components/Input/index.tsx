@@ -5,14 +5,18 @@ import * as S from './styles';
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   icon?: JSX.Element;
   name: string;
+  isFocused?: boolean;
+  isFilled?: boolean;
 }
 
 const Input: React.RefForwardingComponent<HTMLInputElement, InputProps> = (
-  { icon, ...props },
+  { icon, isFocused, isFilled, ...props },
   ref,
 ) => {
+  console.log(isFocused);
+
   return (
-    <S.InputGroup hasIcon={!!icon}>
+    <S.InputGroup isFocused={isFocused} isFilled={isFilled} hasIcon={!!icon}>
       {!!icon && icon}
       <input {...props} ref={ref} />
     </S.InputGroup>
