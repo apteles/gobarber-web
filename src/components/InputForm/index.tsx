@@ -23,16 +23,19 @@ const InputForm: React.FC<InputProps> = ({ name, ...props }) => {
   }, [fieldName, registerField]);
 
   return (
-    <Input
-      isFocused={isFocused}
-      isFilled={isFilled}
-      onFocus={() => setFocused(true)}
-      onBlur={handleInputBlur}
-      defaultValue={defaultValue}
-      ref={inputRef}
-      name={fieldName}
-      {...props}
-    />
+    <>
+      <Input
+        error={error}
+        isFocused={isFocused}
+        isFilled={isFilled}
+        onFocus={() => setFocused(true)}
+        onBlur={handleInputBlur}
+        defaultValue={defaultValue}
+        ref={inputRef}
+        name={fieldName}
+        {...props}
+      />
+    </>
   );
 };
 

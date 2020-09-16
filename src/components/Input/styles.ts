@@ -1,9 +1,11 @@
 import styled, { css } from 'styled-components';
+import Tooltip from '../Tooltip';
 
 type InputStyle = {
   hasIcon?: boolean;
   isFocused?: boolean;
   isFilled?: boolean;
+  hasError?: boolean;
 };
 export const InputGroup = styled.div<InputStyle>`
   display: flex;
@@ -17,6 +19,12 @@ export const InputGroup = styled.div<InputStyle>`
 
   padding: 2rem 0 2rem 1.8rem;
   border: 2px solid transparent;
+
+  ${({ hasError }) =>
+    hasError &&
+    css`
+      border-color: #c53030;
+    `}
 
   ${({ isFocused }) =>
     isFocused &&
@@ -35,6 +43,7 @@ export const InputGroup = styled.div<InputStyle>`
       }
     `}
 
+
   > input {
     width: 100%;
     border: none;
@@ -44,5 +53,17 @@ export const InputGroup = styled.div<InputStyle>`
   > svg {
     color: #666360;
     margin-right: 1.3em;
+  }
+`;
+
+export const Error = styled(Tooltip)`
+  margin-right: 1.6rem;
+  span {
+    background: #c53030;
+    color: #fff;
+
+    &::before {
+      border-color: #c53030 transparent;
+    }
   }
 `;
