@@ -8,11 +8,11 @@ import logoImage from '../../assets/logo.svg';
 import Button from '../../components/Button';
 import Input from '../../components/InputForm';
 import { getValidationErrors } from '../../utils/getValidationErrors';
-import { AuthContext, CredentialsType } from '../../context/AuthContext';
+import { CredentialsType, useAuth } from '../../context/AuthContext';
 
 const Signin: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
-  const { signIn } = useContext(AuthContext);
+  const { signIn } = useAuth();
   const handleSubmit = useCallback(
     async ({ email, password }: CredentialsType) => {
       try {
