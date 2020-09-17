@@ -2,16 +2,16 @@ import React from 'react';
 import './App.css';
 
 import GlobalStyle from './styles/global';
-import AuthContext from './context/AuthContext';
+import { AuthProvider } from './context/AuthContext';
 import Signin from './pages/Signin';
 // import Signup from './pages/Signup';
 
 const App: React.FC = () => (
   <>
     <GlobalStyle />
-    <AuthContext.Provider value={{ name: 'André' }}>
+    <AuthProvider>
       <Signin />
-    </AuthContext.Provider>
+    </AuthProvider>
   </>
 );
 
