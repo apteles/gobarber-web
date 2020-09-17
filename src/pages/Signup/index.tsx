@@ -6,7 +6,6 @@ import * as Yup from 'yup';
 import logoImage from '../../assets/logo.svg';
 import { getValidationErrors } from '../../utils/getValidationErrors';
 import Button from '../../components/Button';
-// import Input from '../../components/Input';
 import Input from '../../components/InputForm';
 
 import * as S from './styles';
