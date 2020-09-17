@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import React, { createContext, useCallback, useContext, useState } from 'react';
 import api from '../services/api';
 
@@ -14,6 +15,7 @@ export type AuthState = {
 type AuthContextApp = {
   user: object;
   signIn(credentials: CredentialsType): Promise<void>;
+  signOut(): void;
 };
 
 export const AuthContext = createContext<AuthContextApp>({} as AuthContextApp);
@@ -37,8 +39,14 @@ export const AuthProvider: React.FC = ({ children }) => {
     setData({ token, user });
   }, []);
 
+  const signOut = useCallback(() => {
+    localStorage.removeItem('@gobarber:token');
+    localStorage.removeItem('@gobarber:user');
+    setData({} as AuthState);
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ user: data.user, signIn }}>
+    <AuthContext.Provider value={{ user: data.user, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );
