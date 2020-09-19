@@ -9,10 +9,12 @@ import Button from '../../components/Button';
 import Input from '../../components/InputForm';
 import { getValidationErrors } from '../../utils/getValidationErrors';
 import { CredentialsType, useAuth } from '../../context/AuthContext';
+import { useToast } from '../../context/Toast';
 
 const Signin: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const { signIn } = useAuth();
+  const { addToast } = useToast();
   const handleSubmit = useCallback(
     async ({ email, password }: CredentialsType) => {
       try {
@@ -25,12 +27,16 @@ const Signin: React.FC = () => {
         });
         await schema.validate({ email, password }, { abortEarly: false });
 
-        signIn({ email, password });
+        await signIn({ email, password });
       } catch (error) {
-        formRef.current?.setErrors(getValidationErrors(error));
+        if (error instanceof Yup.ValidationError) {
+          formRef.current?.setErrors(getValidationErrors(error));
+        }
+
+        addToast();
       }
     },
-    [signIn],
+    [signIn, addToast],
   );
 
   return (
