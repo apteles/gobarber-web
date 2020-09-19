@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { shade } from 'polished';
 import backgroundImage from '../../assets/register-background.png';
 
@@ -20,12 +20,25 @@ export const Right = styled.div`
   background: url(${backgroundImage}) no-repeat;
   background-size: cover;
 `;
+
+const appearFromRight = keyframes`
+  from{
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to{
+    opacity: 1;
+    transform: translateX(0);
+  }
+`;
+
 export const Register = styled.div`
   display: flex;
   flex-direction: column;
 
   width: 34rem;
 
+  animation: ${appearFromRight} 1s;
   > form {
     display: flex;
     flex-direction: column;

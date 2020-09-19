@@ -1,4 +1,5 @@
 import React, { useRef, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
@@ -31,6 +32,7 @@ const Signin: React.FC = () => {
       } catch (error) {
         if (error instanceof Yup.ValidationError) {
           formRef.current?.setErrors(getValidationErrors(error));
+          return;
         }
 
         addToast({
@@ -74,7 +76,7 @@ const Signin: React.FC = () => {
 
           <S.Register>
             <FiLogIn />
-            <a href="/">Criar conta</a>
+            <Link to="/signup">Criar conta</Link>
           </S.Register>
         </S.Login>
       </S.Left>

@@ -1,4 +1,5 @@
 import React, { useCallback, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { FiMail, FiLock, FiUser, FiArrowLeft } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
@@ -12,6 +13,7 @@ import * as S from './styles';
 
 const Signup: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
+  // eslint-disable-next-line @typescript-eslint/ban-types
   const handleSubmit = useCallback(async (data: object) => {
     try {
       formRef.current?.setErrors({});
@@ -62,7 +64,7 @@ const Signup: React.FC = () => {
 
           <S.Login>
             <FiArrowLeft />
-            <a href="/">Voltar para Login</a>
+            <Link to="/">Voltar para Login</Link>
           </S.Login>
         </S.Register>
       </S.Left>
