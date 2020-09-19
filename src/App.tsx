@@ -4,6 +4,7 @@ import './App.css';
 import GlobalStyle from './styles/global';
 import { AuthProvider } from './context/AuthContext';
 import Signin from './pages/Signin';
+import ToastContainer from './components/ToastContainer';
 // import Signup from './pages/Signup';
 
 const App: React.FC = () => (
@@ -12,6 +13,7 @@ const App: React.FC = () => (
     <AuthProvider>
       <Signin />
     </AuthProvider>
+    <ToastContainer />
   </>
 );
 
