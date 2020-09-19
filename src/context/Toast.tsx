@@ -1,10 +1,18 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import React, { createContext, useCallback, useContext, useState } from 'react';
+import { uuid } from 'uuidv4';
 import ToastContainer from '../components/ToastContainer';
 
+export type ToastMessage = {
+  id: string;
+  type?: 'success' | 'error' | 'info';
+  title: string;
+  description?: string;
+};
+
 type ToastContextApp = {
-  addToast(): void;
-  removeToast(): void;
+  addToast(message: Omit<ToastMessage, 'id'>): void;
+  removeToast(id: string): void;
 };
 
 export const ToastContext = createContext<ToastContextApp>(
@@ -12,17 +20,26 @@ export const ToastContext = createContext<ToastContextApp>(
 );
 
 export const ToastProvider: React.FC = ({ children }) => {
-  const addToast = useCallback(() => {
-    console.log('addToas');
+  const [messages, setMessages] = useState<ToastMessage[]>([]);
+  const addToast = useCallback(({ title, type, description }) => {
+    const id = uuid();
+    const toast = {
+      id,
+      title,
+      type,
+      description,
+    };
+
+    setMessages(previosState => [...previosState, toast]);
   }, []);
-  const removeToast = useCallback(() => {
-    console.log('removeToas');
+  const removeToast = useCallback((id: string) => {
+    setMessages(previosState => previosState.filter(toast => toast.id !== id));
   }, []);
 
   return (
     <ToastContext.Provider value={{ addToast, removeToast }}>
       {children}
-      <ToastContainer />
+      <ToastContainer messages={messages} />
     </ToastContext.Provider>
   );
 };
