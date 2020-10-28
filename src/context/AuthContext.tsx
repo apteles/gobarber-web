@@ -7,6 +7,8 @@ export type CredentialsType = {
   password: string;
 };
 
+export type ForgotCredentialsType = Omit<CredentialsType, 'password'>;
+
 export type AuthState = {
   user: object;
   token: string;
