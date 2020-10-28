@@ -1,5 +1,5 @@
 import React, { useRef, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
@@ -13,6 +13,7 @@ import { CredentialsType, useAuth } from '../../context/AuthContext';
 import { useToast } from '../../context/Toast';
 
 const Signin: React.FC = () => {
+  const history = useHistory();
   const formRef = useRef<FormHandles>(null);
   const { signIn } = useAuth();
   const { addToast } = useToast();
@@ -29,6 +30,7 @@ const Signin: React.FC = () => {
         await schema.validate({ email, password }, { abortEarly: false });
 
         await signIn({ email, password });
+        history.push('/dashboard');
       } catch (error) {
         if (error instanceof Yup.ValidationError) {
           formRef.current?.setErrors(getValidationErrors(error));
@@ -43,7 +45,7 @@ const Signin: React.FC = () => {
         });
       }
     },
-    [signIn, addToast],
+    [signIn, addToast, history],
   );
 
   return (
@@ -71,7 +73,7 @@ const Signin: React.FC = () => {
 
             <Button type="submit">Entrar</Button>
 
-            <a href="#/">Esqueci a senha</a>
+            <Link to="/forgot">Esqueci a senha</Link>
           </Form>
 
           <S.Register>
