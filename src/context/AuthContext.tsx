@@ -14,13 +14,19 @@ export type ResetCredentialsType = {
   password_confirmation: string;
 };
 
+type User = {
+  id: string;
+  avatar_url: string;
+  name: string;
+};
+
 export type AuthState = {
-  user: object;
+  user: User;
   token: string;
 };
 
 type AuthContextApp = {
-  user: object;
+  user: User;
   signIn(credentials: CredentialsType): Promise<void>;
   signOut(): void;
 };
