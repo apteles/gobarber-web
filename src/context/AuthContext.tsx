@@ -7,6 +7,13 @@ export type CredentialsType = {
   password: string;
 };
 
+export type ForgotCredentialsType = Omit<CredentialsType, 'password'>;
+
+export type ResetCredentialsType = {
+  password: string;
+  password_confirmation: string;
+};
+
 export type AuthState = {
   user: object;
   token: string;
