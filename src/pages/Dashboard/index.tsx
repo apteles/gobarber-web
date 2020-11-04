@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { FiClock, FiPower } from 'react-icons/fi';
 import * as S from './styles';
@@ -7,6 +7,7 @@ import { useAuth } from '../../context/AuthContext';
 
 const Dashboard: React.FC = () => {
   const { signOut, user } = useAuth();
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <S.Container>
       <S.Header>
@@ -47,6 +48,56 @@ const Dashboard: React.FC = () => {
               </span>
             </div>
           </S.NextAppointment>
+          <S.Section>
+            <strong>Manhã</strong>
+
+            <S.Appointment>
+              <span>
+                <FiClock />
+                08:00
+              </span>
+              <div>
+                <img src="https://github.com/apteles.png" alt="André Teles" />
+                <strong>André Teles</strong>
+              </div>
+            </S.Appointment>
+
+            <S.Appointment>
+              <span>
+                <FiClock />
+                08:00
+              </span>
+              <div>
+                <img src="https://github.com/apteles.png" alt="André Teles" />
+                <strong>André Teles</strong>
+              </div>
+            </S.Appointment>
+          </S.Section>
+          <S.Section>
+            <strong>Tarde</strong>
+
+            <S.Appointment>
+              <span>
+                <FiClock />
+                08:00
+              </span>
+              <div>
+                <img src="https://github.com/apteles.png" alt="André Teles" />
+                <strong>André Teles</strong>
+              </div>
+            </S.Appointment>
+
+            <S.Appointment>
+              <span>
+                <FiClock />
+                08:00
+              </span>
+              <div>
+                <img src="https://github.com/apteles.png" alt="André Teles" />
+                <strong>André Teles</strong>
+              </div>
+            </S.Appointment>
+          </S.Section>
         </S.Schedule>
         <S.Calendar />
       </S.Content>

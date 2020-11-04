@@ -134,3 +134,58 @@ export const Content = styled.main`
   margin: 6.4rem auto;
   display: flex;
 `;
+
+export const Section = styled.section`
+  margin-top: 4.8rem;
+  > strong {
+    color: #999591;
+    font-size: 2rem;
+    line-height: 2.6rem;
+    display: block;
+    border-bottom: 1px solid #3e3b47;
+    padding-bottom: 1.6rem;
+    margin-bottom: 1.6rem;
+  }
+`;
+export const Appointment = styled.div`
+  display: flex;
+  align-items: center;
+  span {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    color: #f4ede8;
+
+    svg {
+      color: #ff9000;
+      margin-right: 0.8rem;
+    }
+  }
+
+  & + div {
+    margin-top: 1.6rem;
+  }
+
+  div {
+    flex: 1;
+    background: #3e3b47;
+    display: flex;
+    align-items: center;
+    padding: 1.6rem 2.4rem;
+    border-radius: 1rem;
+    margin-left: 2.4rem;
+    position: relative;
+
+    img {
+      width: 5rem;
+      height: 5rem;
+      border-radius: 50%;
+    }
+
+    strong {
+      margin-left: 2.4rem;
+      color: #fff;
+      font-size: 2rem;
+    }
+  }
+`;
