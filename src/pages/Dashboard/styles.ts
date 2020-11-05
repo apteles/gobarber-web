@@ -231,6 +231,9 @@ export const Section = styled.section`
     padding-bottom: 1.6rem;
     margin-bottom: 1.6rem;
   }
+  > p {
+    color: #999591;
+  }
 `;
 export const Appointment = styled.div`
   display: flex;
