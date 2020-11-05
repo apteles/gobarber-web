@@ -1,7 +1,7 @@
 /* eslint-disable import/no-duplicates */
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import DayPicker, { DayModifiers } from 'react-day-picker';
-import { isToday, format } from 'date-fns';
+import { isToday, format, parseISO } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 import 'react-day-picker/lib/style.css';
 import { FiClock, FiPower } from 'react-icons/fi';
@@ -18,6 +18,7 @@ interface MonthAvailabilityItem {
 interface Appointment {
   id: string;
   date: string;
+  hourFormatted: string;
   user: {
     name: string;
     avatar_url: string;
@@ -65,6 +66,17 @@ const Dashboard: React.FC = () => {
     });
   }, [selectedDate]);
 
+  const morningAppointments = useMemo(() => {
+    return appointments.filter(
+      appointment => parseISO(appointment.date).getHours() < 12,
+    );
+  }, [appointments]);
+  const afternoonAppointments = useMemo(() => {
+    return appointments.filter(
+      appointment => parseISO(appointment.date).getHours() >= 12,
+    );
+  }, [appointments]);
+
   useEffect(() => {
     api
       .get(`/providers/${user.id}/month-availability`, {
@@ -80,7 +92,7 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     api
-      .get('/appointments/me', {
+      .get<Appointment[]>('/appointments/me', {
         params: {
           year: selectedDate.getFullYear(),
           month: selectedDate.getMonth() + 1,
@@ -88,7 +100,13 @@ const Dashboard: React.FC = () => {
         },
       })
       .then(response => {
-        setAppointments(response.data);
+        const appointmentsFormatted = response.data.map(appointment => {
+          return {
+            ...appointment,
+            hourFormatted: format(parseISO(appointment.date), 'HH:mm'),
+          };
+        });
+        setAppointments(appointmentsFormatted);
       });
   }, [selectedDate]);
 
@@ -135,52 +153,46 @@ const Dashboard: React.FC = () => {
           <S.Section>
             <strong>Manhã</strong>
 
-            <S.Appointment>
-              <span>
-                <FiClock />
-                08:00
-              </span>
-              <div>
-                <img src="https://github.com/apteles.png" alt="André Teles" />
-                <strong>André Teles</strong>
-              </div>
-            </S.Appointment>
-
-            <S.Appointment>
-              <span>
-                <FiClock />
-                08:00
-              </span>
-              <div>
-                <img src="https://github.com/apteles.png" alt="André Teles" />
-                <strong>André Teles</strong>
-              </div>
-            </S.Appointment>
+            {morningAppointments.map(appointment => (
+              <S.Appointment key={appointment.id}>
+                <span>
+                  <FiClock />
+                  {appointment.hourFormatted}
+                </span>
+                <div>
+                  <img
+                    src={
+                      appointment.user.avatar_url ||
+                      'https://ui-avatars.com/api/?name=John+Doe'
+                    }
+                    alt={appointment.user.name}
+                  />
+                  <strong>{appointment.user.name}</strong>
+                </div>
+              </S.Appointment>
+            ))}
           </S.Section>
           <S.Section>
             <strong>Tarde</strong>
 
-            <S.Appointment>
-              <span>
-                <FiClock />
-                08:00
-              </span>
-              <div>
-                <img src="https://github.com/apteles.png" alt="André Teles" />
-                <strong>André Teles</strong>
-              </div>
-            </S.Appointment>
-
-            <S.Appointment>
-              <span>
-                <FiClock />
-                08:00
-              </span>
-              <div>
-                <img src="https://github.com/apteles.png" alt="André Teles" />
-                <strong>André Teles</strong>
-              </div>
-            </S.Appointment>
+            {afternoonAppointments.map(appointment => (
+              <S.Appointment key={appointment.id}>
+                <span>
+                  <FiClock />
+                  {appointment.hourFormatted}
+                </span>
+                <div>
+                  <img
+                    src={
+                      appointment.user.avatar_url ||
+                      'https://ui-avatars.com/api/?name=John+Doe'
+                    }
+                    alt={appointment.user.name}
+                  />
+                  <strong>{appointment.user.name}</strong>
+                </div>
+              </S.Appointment>
+            ))}
           </S.Section>
         </S.Schedule>
         <S.Calendar>
