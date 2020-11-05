@@ -14,13 +14,19 @@ export type ResetCredentialsType = {
   password_confirmation: string;
 };
 
+type User = {
+  id: string;
+  avatar_url: string;
+  name: string;
+};
+
 export type AuthState = {
-  user: object;
+  user: User;
   token: string;
 };
 
 type AuthContextApp = {
-  user: object;
+  user: User;
   signIn(credentials: CredentialsType): Promise<void>;
   signOut(): void;
 };
@@ -32,8 +38,10 @@ export const AuthProvider: React.FC = ({ children }) => {
     const token = localStorage.getItem('@gobarber:token');
     const user = localStorage.getItem('@gobarber:user');
     if (token && user) {
+      api.defaults.headers.authorization = `Bearer ${token}`;
       return { token, user: JSON.parse(user) };
     }
+
     return {} as AuthState;
   });
 
@@ -43,6 +51,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     localStorage.setItem('@gobarber:token', token);
     localStorage.setItem('@gobarber:user', JSON.stringify(user));
 
+    api.defaults.headers.authorization = `Bearer ${token}`;
     setData({ token, user });
   }, []);
 
