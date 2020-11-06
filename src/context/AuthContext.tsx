@@ -18,6 +18,7 @@ type User = {
   id: string;
   avatar_url: string;
   name: string;
+  email: string;
 };
 
 export type AuthState = {
@@ -29,6 +30,7 @@ type AuthContextApp = {
   user: User;
   signIn(credentials: CredentialsType): Promise<void>;
   signOut(): void;
+  updateUser(user: User): void;
 };
 
 export const AuthContext = createContext<AuthContextApp>({} as AuthContextApp);
@@ -61,8 +63,21 @@ export const AuthProvider: React.FC = ({ children }) => {
     setData({} as AuthState);
   }, []);
 
+  const updateUser = useCallback(
+    (user: User) => {
+      setData({
+        token: data.token,
+        user,
+      });
+      localStorage.setItem('@gobarber:user', JSON.stringify(user));
+    },
+    [data],
+  );
+
   return (
-    <AuthContext.Provider value={{ user: data.user, signIn, signOut }}>
+    <AuthContext.Provider
+      value={{ user: data.user, signIn, signOut, updateUser }}
+    >
       {children}
     </AuthContext.Provider>
   );
