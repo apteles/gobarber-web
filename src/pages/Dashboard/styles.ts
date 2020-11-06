@@ -48,7 +48,13 @@ export const Profile = styled.div`
     flex-direction: column;
     margin-left: 1.6rem;
     line-height: 2.4rem;
+    a {
+      text-decoration: none;
 
+      &:hover {
+        opacity: 0.7;
+      }
+    }
     span {
       color: #f4ede8;
     }
