@@ -7,11 +7,12 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
   isFocused?: boolean;
   isFilled?: boolean;
+  containerStyle?: { [key: string]: string };
   error?: string;
 }
 
 const Input: React.RefForwardingComponent<HTMLInputElement, InputProps> = (
-  { icon, isFocused, isFilled, error, ...props },
+  { icon, isFocused, isFilled, error, containerStyle, ...props },
   ref,
 ) => {
   return (
@@ -20,6 +21,7 @@ const Input: React.RefForwardingComponent<HTMLInputElement, InputProps> = (
       hasError={!!error}
       isFilled={isFilled}
       hasIcon={!!icon}
+      style={containerStyle}
     >
       {!!icon && icon}
       <input {...props} ref={ref} />
