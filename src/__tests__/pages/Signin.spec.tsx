@@ -14,7 +14,5 @@ describe('Signin Page', () => {
 
     // const emailField = getByPlaceholderText('E-mail');
     // const passwordField = getByPlaceholderText('Senha');
-
-    // fireEvent;
   });
 });
