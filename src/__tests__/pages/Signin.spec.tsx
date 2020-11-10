@@ -1,18 +1,93 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 import Signin from '../../pages/Signin';
+
+const mockedHistoryPush = jest.fn();
+const mockedSignIn = jest.fn();
+const mockedAddToast = jest.fn();
+
+jest.mock('../../context/Toast', () => {
+  return {
+    useToast: () => ({
+      addToast: mockedAddToast,
+    }),
+  };
+});
 
 jest.mock('react-router-dom', () => {
   return {
-    useHistory: jest.fn(),
+    useHistory: () => ({
+      push: mockedHistoryPush,
+    }),
     Link: ({ children }: { children: React.ReactNode }) => children,
   };
 });
-describe('Signin Page', () => {
-  it('should be able to sign in', () => {
-    render(<Signin />);
 
-    // const emailField = getByPlaceholderText('E-mail');
-    // const passwordField = getByPlaceholderText('Senha');
+jest.mock('../../context/AuthContext', () => {
+  return {
+    useAuth: () => ({
+      signIn: mockedSignIn,
+    }),
+  };
+});
+describe('Signin Page', () => {
+  beforeEach(() => {
+    mockedHistoryPush.mockClear();
+  });
+  it('should be able to sign in', async () => {
+    const { getByPlaceholderText, getByText } = render(<Signin />);
+
+    const emailField = getByPlaceholderText('E-mail');
+    const passwordField = getByPlaceholderText('Senha');
+    const buttonElement = getByText('Entrar');
+    fireEvent.change(emailField, { target: { value: 'johndoe@domain.com' } });
+    fireEvent.change(passwordField, { target: { value: '123456' } });
+    fireEvent.click(buttonElement);
+
+    await waitFor(() => {
+      expect(mockedHistoryPush).toHaveBeenCalledWith('/dashboard');
+    });
+  });
+
+  it('should not be able to sign in with wrong credentials', async () => {
+    const { getByPlaceholderText, getByText } = render(<Signin />);
+
+    const emailField = getByPlaceholderText('E-mail');
+    const passwordField = getByPlaceholderText('Senha');
+    const buttonElement = getByText('Entrar');
+    fireEvent.change(emailField, {
+      target: { value: 'invalid-email' },
+    });
+    fireEvent.change(passwordField, { target: { value: '123456' } });
+    fireEvent.click(buttonElement);
+
+    await waitFor(() => {
+      expect(mockedHistoryPush).not.toHaveBeenCalled();
+    });
+  });
+
+  it('should display toast error if login fails', async () => {
+    mockedSignIn.mockImplementation(() => {
+      throw new Error();
+    });
+
+    const { getByPlaceholderText, getByText } = render(<Signin />);
+
+    const emailField = getByPlaceholderText('E-mail');
+    const passwordField = getByPlaceholderText('Senha');
+    const buttonElement = getByText('Entrar');
+
+    fireEvent.change(emailField, {
+      target: { value: 'johndoe@domain.com' },
+    });
+
+    fireEvent.change(passwordField, { target: { value: '123456' } });
+    fireEvent.click(buttonElement);
+
+    await waitFor(() => {
+      expect(mockedAddToast).toHaveBeenCalledWith(
+        expect.objectContaining({ type: 'error' }),
+      );
+    });
   });
 });
