@@ -22,6 +22,7 @@ const Input: React.RefForwardingComponent<HTMLInputElement, InputProps> = (
       isFilled={isFilled}
       hasIcon={!!icon}
       style={containerStyle}
+      data-testid="input-container"
     >
       {!!icon && icon}
       <input {...props} ref={ref} />
